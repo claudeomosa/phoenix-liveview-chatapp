@@ -13,9 +13,4 @@ defmodule ChatAppWeb.PageLive do
     {:noreply, push_redirect(socket, to: random_slug)}
   end
 
-  def render(assigns) do
-    ~H"""
-      <button title="start a room" phx-click="random-room">Start Room</button>
-    """
-  end
  end
