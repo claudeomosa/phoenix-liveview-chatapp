@@ -11,7 +11,7 @@ defmodule ChatApp.Application do
       # Start the Telemetry supervisor
       ChatAppWeb.Telemetry,
       # Start the PubSub system
-      {Phoenix.PubSub, name: ChatApp.PubSub},
+      {Phoenix.PubSub, [name: ChatApp.PubSub, adapter: Phoenix.PubSub.PG2]},
       # Start the Endpoint (http/https)
       ChatAppWeb.Endpoint
       # Start a worker by calling: ChatApp.Worker.start_link(arg)

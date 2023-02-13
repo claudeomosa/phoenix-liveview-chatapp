@@ -3,9 +3,17 @@
 </p>
 
 <section class="w-4/5 mx-auto">
-  <div id="chat-container" class="border bg-slate-300 p-2 justify-between h-[40rem] flex-col">
-    <div id="chat-messages" class="grow">
-      Chat goes here 
+  <div id="chat-container" class="border bg-slate-300 flex p-2 justify-between h-[40rem] flex-col">
+    <div id="chat-messages" class="grow" phx-update="append">
+      <%= for message <- @messages do %>
+       <p id="<%= message%>"> <%= message%> </p>
+       <br>
+      <% end %>
     </div>
+    <%= f = form_for :chat, "#", id: "chat-form", phx_submit: :submit_message %> 
+    <%= text_input f, :message, placeholder: "Enter your text message..." %>
+    </form>
+    
   </div>
+
 </section>
