@@ -15,9 +15,10 @@ defmodule ChatAppWeb.RoomLive do
         room_id: room_id,
         topic: topic,
         message: "",
-        messages: [%{uuid: UUID.uuid4(), text: "#{username} joined the chat", username: "user"}],
+        messages: [],
         temporary_assigns: [messages: []],
-        username: username
+        username: username,
+        online_users: []
       )
     }
   end
@@ -46,11 +47,29 @@ defmodule ChatAppWeb.RoomLive do
     join_messages = 
       joins 
       |> Map.keys()
-      |> Enum.map(fn username -> %{uuid: UUID.uuid4(), text: "#{username} joined the chat", username: "user"} end)
+      |> Enum.map(fn username -> %{type: :system, uuid: UUID.uuid4(), text: "#{username} joined the chat"} end)
     leave_messages = 
       leaves 
       |> Map.keys()
-      |> Enum.map(fn username -> %{uuid: UUID.uuid4(), text: "#{username} left the chart", username: username} end)
-    {:noreply, assign(socket, messages: join_messages ++ leave_messages)}
+      |> Enum.map(fn username -> %{type: :system, uuid: UUID.uuid4(), text: "#{username} left the chart"} end)
+    online_users = ChatAppWeb.Presence.list(socket.assigns.topic) |> Map.keys()
+
+    Logger.info(online_users)
+    {:noreply, assign(socket, messages: join_messages ++ leave_messages, online_users: online_users)}
+  end
+  def display_message(%{type: :system, uuid: uuid, text: text}) do
+    ~E"""
+    <p id="<%= uuid%>" class="italic">
+      *** <%= text%>
+    </p>
+    """
+  end
+
+  def display_message(%{uuid: uuid, text: text, username: username}) do
+    ~E"""
+      <p id="<%= uuid%>">
+       <strong><%=username%>: </strong><%=text%>
+     </p>
+    """
   end
 end 
