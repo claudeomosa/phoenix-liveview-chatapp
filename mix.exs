@@ -48,7 +48,7 @@ defmodule ChatApp.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:mnemonic_slugs, "~> 0.0.3"},
       {:tailwind, "~> 0.1", runtime: Mix.env() == :dev},
-      {:uuid, "~> 1.1"}
+      {:elixir_uuid, "~> 1.2"}
     ]
   end
 
