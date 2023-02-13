@@ -1,9 +1,10 @@
+<section class="w-[80rem] mx-auto">
 <p class="text-center pt-8 pb-6">
   Welcome to <strong> <%= @room_id%>'s </strong> chat room, you are <strong class="underline italic"><%= @username %></strong>
 </p>
 
-<section class="w-4/5 mx-auto">
-  <div id="chat-container" class="flex border bg-slate-300 p-2 justify-between h-[40rem] ">
+
+  <div id="chat-container" class="flex border bg-slate-300 p-2 justify-between h-[40rem]">
     <div id="chat-messages" class="grow" phx-update="append">
       <%= for message <- @messages do %>
       <%= display_message(message)%>
@@ -17,7 +18,7 @@
       <% end %>
     </div>
   </div>
-    <%= f = form_for :chat, "#", id: "chat-form", phx_submit: :submit_message, phx_change: :form_update %> 
+    <%= f = form_for :chat, "#", id: "chat-form", phx_submit: :submit_message, phx_change: :form_update %>
     <%= text_input f, :message, placeholder: "Enter your text message...", value: @message, class: "w-full mt-4" %>
     </form>
 
