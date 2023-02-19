@@ -10,7 +10,7 @@ defmodule ChatAppWeb.RoomLive do
       ChatAppWeb.Endpoint.subscribe(topic)
       ChatAppWeb.Presence.track(self(), topic, username, %{})
     end
-   {:ok, 
+   {:ok,
     assign(socket,
         room_id: room_id,
         topic: topic,
@@ -38,18 +38,18 @@ defmodule ChatAppWeb.RoomLive do
   end
   @impl true
   def handle_info(%{event: "new-message", payload: message}, socket) do
-    
+
     {:noreply, assign(socket, messages: [message])}
   end
 
   @impl true
   def handle_info(%{event: "presence_diff", payload: %{joins: joins, leaves: leaves}}, socket) do
-    join_messages = 
-      joins 
+    join_messages =
+      joins
       |> Map.keys()
       |> Enum.map(fn username -> %{type: :system, uuid: UUID.uuid4(), text: "#{username} joined the chat"} end)
-    leave_messages = 
-      leaves 
+    leave_messages =
+      leaves
       |> Map.keys()
       |> Enum.map(fn username -> %{type: :system, uuid: UUID.uuid4(), text: "#{username} left the chart"} end)
     online_users = ChatAppWeb.Presence.list(socket.assigns.topic) |> Map.keys()
@@ -67,9 +67,20 @@ defmodule ChatAppWeb.RoomLive do
 
   def display_message(%{uuid: uuid, text: text, username: username}) do
     ~E"""
-      <p id="<%= uuid%>">
-       <strong><%=username%>: </strong><%=text%>
-     </p>
+
+    <div class="border-b border-gray-600 py-3 flex items-start mb-4 text-sm" id="<%= uuid%>">
+       <img src="https://cdn.discordapp.com/embed/avatars/4.png" class="cursor-pointer w-10 h-10 rounded-3xl mr-3">
+        <div class="flex-1 overflow-hidden">
+          <div>
+            <span class="font-bold text-red-300 cursor-pointer hover:underline"><%= username%></span>
+            <span class="font-bold text-gray-400 text-xs">12:00</span>
+          </div>
+          <p class="text-white leading-normal"><%= text%></p>
+        </div>
+     </div>
+
+
     """
+
   end
-end 
+end

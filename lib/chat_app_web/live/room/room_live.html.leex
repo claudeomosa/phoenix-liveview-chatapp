@@ -1,16 +1,19 @@
-<section class="w-[80rem] mx-auto">
+<section class="w-screen mx-auto bg-gray-800">
 <p class="text-center pt-8 pb-6">
   Welcome to <strong> <%= @room_id%>'s </strong> chat room, you are <strong class="underline italic"><%= @username %></strong>
 </p>
 
-
+<!--messages-->
+<!--
   <div id="chat-container" class="flex border bg-slate-300 p-2 justify-between h-[40rem]">
     <div id="chat-messages" class="grow" phx-update="append">
       <%= for message <- @messages do %>
       <%= display_message(message)%>
             <% end %>
     </div>
-
+-->
+<!--active mbrs-->
+<!--
     <div id="user-list" class="border bg-green-300 border-orange-300 p-2">
     <h6 class="font-semibold" >Active Members</h6>
       <%= for user <- @online_users do%>
@@ -18,8 +21,64 @@
       <% end %>
     </div>
   </div>
-    <%= f = form_for :chat, "#", id: "chat-form", phx_submit: :submit_message, phx_change: :form_update %>
-    <%= text_input f, :message, placeholder: "Enter your text message...", value: @message, class: "w-full mt-4" %>
+-->
+<div class="w-3/4 mx-auto">
+  <div class="font-sans antialiased h-[650px] flex">
+    <div class="bg-gray-800 text-purple-lighter flex-none w-64 pb-6 hidden md:block" id="user-list">
+      <div class="text-white mb-2 mt-3 px-4 flex justify-between border-b border-gray-600 py-1 shadow-xl">
+        <div class="flex-auto">
+          <h1 class="font-semibold text-xl leading-tight mb-1 truncate">Online Members</h1>
+        </div>
+
+        <div>
+          <svg class="arrow-gKvcEx icon-2yIBmh opacity-50 cursor-pointer" width="24" height="24" viewBox="0 0 24 24">
+            <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M16.59 8.59004L12 13.17L7.41 8.59004L6 10L12 16L18 10L16.59 8.59004Z"></path>
+          </svg>
+        </div>
+      </div>
+
+      <div class="mb-8" >
+        <div class="px-4 mb-2 text-white  justify-between items-center">
+        <%= for user <- @online_users do%>
+          <%= if user == @username do %>
+            <div class="opacity-75 cursor-pointer text-red-400 "><%= String.upcase(user) %></div>
+            <% else %>
+          <div class="opacity-75 cursor-pointer"><%= String.upcase(user) %></div>
+          <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="flex-1 flex flex-col bg-gray-800 overflow-hidden">
+  <!-- Top bar -->
+  <div class="border-b border-gray-600 flex px-6 py-2 items-center flex-none shadow-xl">
+    <div class="flex flex-col">
+      <h3 class="text-white mb-1 font-bold text-xl text-gray-100">
+        <span class="text-gray-400"></span> <%= @room_id%></h3>
+    </div>
+  </div>
+  <!-- Chat messages -->
+  <div class="grow" phx-update="append" id="chat-messages">
+
+    <!-- A message -->
+    <%= for message <- @messages do %>
+    <%= display_message(message)%>
+    <% end %>
+    <!-- A message -->
+  </div>
+</div>
+  </div>
+
+
+
+
+  <%= f = form_for :chat, "#", id: "chat-form", phx_submit: :submit_message, phx_change: :form_update %>
+
+
+    <%= text_input f, :message, placeholder: "Enter your text message...", value: @message, class: "w-full block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+
+
     </form>
+</div>
 
 </section>
