@@ -22,19 +22,15 @@
     </div>
   </div>
 -->
-<div class="w-3/4 mx-auto">
-  <div class="font-sans antialiased h-[650px] flex">
-    <div class="bg-gray-800 text-purple-lighter flex-none w-64 pb-6 hidden md:block" id="user-list">
+<div class="w-3/4 mx-auto ">
+  <div class="font-sans antialiased h-[650px] flex ">
+    <div class="bg-gray-800 text-purple-lighter border-x-2 flex-none w-64 pb-6 hidden md:block" id="user-list">
       <div class="text-white mb-2 mt-3 px-4 flex justify-between border-b border-gray-600 py-1 shadow-xl">
         <div class="flex-auto">
           <h1 class="font-semibold text-xl leading-tight mb-1 truncate">Online Members</h1>
         </div>
 
-        <div>
-          <svg class="arrow-gKvcEx icon-2yIBmh opacity-50 cursor-pointer" width="24" height="24" viewBox="0 0 24 24">
-            <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M16.59 8.59004L12 13.17L7.41 8.59004L6 10L12 16L18 10L16.59 8.59004Z"></path>
-          </svg>
-        </div>
+
       </div>
 
       <div class="mb-8" >
@@ -63,6 +59,7 @@
     <!-- A message -->
     <%= for message <- @messages do %>
     <%= display_message(message)%>
+
     <% end %>
     <!-- A message -->
   </div>
@@ -71,11 +68,10 @@
 
 
 
-
   <%= f = form_for :chat, "#", id: "chat-form", phx_submit: :submit_message, phx_change: :form_update %>
 
 
-    <%= text_input f, :message, placeholder: "Enter your text message...", value: @message, class: "w-full block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+    <%= text_input f, :message, placeholder: "Enter your text message...", value: @message, class: "w-full block mx-4 p-2.5 mt-3 text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
 
 
     </form>
